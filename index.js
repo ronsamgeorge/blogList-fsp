@@ -5,28 +5,13 @@ const express = require('express');
 const cors = require('cors');
 const { default: mongoose } = require("mongoose");
 const app = express();
+const Blog = require('./models/blogs');
+
+const mongoURL = config.mongo_url;
 
 app.use(cors());
 app.use(express.json());
 
-const blogSchema = new mongoose.Schema({
-    title : String,
-    author : String,
-    url : String,
-    likes: Number
-})
-
-blogSchema.set('toJSON', {
-    transform : (document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString();
-        delete returnedObject._id;
-        delete returnedObject.__v;
-    } 
-})
-
-const Blog = mongoose.model('Blog',blogSchema);
-
-const mongoURL = config.mongo_url;
 mongoose.connect(mongoURL)
 .then(() => {
     logger.info('connected to Database');
