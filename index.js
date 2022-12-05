@@ -35,7 +35,7 @@ mongoose.connect(mongoURL)
 app.get('/api/blogs', (req,res) => {
     Blog.find({})
     .then(result => {
-        console.log(resullt);
+        res.json(result);
     })
     .catch(err => console.log(err));
 })
