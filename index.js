@@ -1,4 +1,5 @@
 const config = require("./utils/config");
+const logger = require("./utils/logger")
 const http = require('http');
 const express = require('express');
 const cors = require('cors');
@@ -28,16 +29,16 @@ const Blog = mongoose.model('Blog',blogSchema);
 const mongoURL = config.mongo_url;
 mongoose.connect(mongoURL)
 .then(() => {
-    console.log('connected to Database');
+    logger.info('connected to Database');
 })
-.catch(err => console.log(err));
+.catch(err => logger.error(err));
 
 app.get('/api/blogs', (req,res) => {
     Blog.find({})
     .then(result => {
         res.json(result);
     })
-    .catch(err => console.log(err));
+    .catch(err => logger.error(err));
 })
 
 app.post('/api/blogs', (req,res) => {
@@ -47,7 +48,7 @@ app.post('/api/blogs', (req,res) => {
     .then(result => {
         res.status(201).json(result);
     })
-    .catch(err => console.log(err));
+    .catch(err => logger.error(err));
 })
 
 app.get('/api/blogs/:id', (req,res) => {
@@ -57,10 +58,10 @@ app.get('/api/blogs/:id', (req,res) => {
     .then(result => {
         res.json(result);
     })
-    .catch(err => console.log(err));
+    .catch(err => logger.error(err));
 })
 
 const PORT = config.port || 8080;
 app.listen(PORT, () => {
-    console.log(`Listening on port : ${PORT}`);
+    logger.info(`Listening on port : ${PORT}`);
 })
