@@ -2,7 +2,7 @@ POST http://localhost:8080/api/blogs
 Content-Type: application/json
 
 {
-    "title" : "Second Blog",
+    "title" : "TEST after refactor 1",
     "author" : "ABC",
     "url" : "www.abc.com/firstBlog",
     "likes" : 123
