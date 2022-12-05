@@ -50,6 +50,16 @@ app.post('/api/blogs', (req,res) => {
     .catch(err => console.log(err));
 })
 
+app.get('/api/blogs/:id', (req,res) => {
+    const id = req.params.id;
+
+    Blog.findById(id)
+    .then(result => {
+        res.json(result);
+    })
+    .catch(err => console.log(err));
+})
+
 const PORT = config.port || 8080;
 app.listen(PORT, () => {
     console.log(`Listening on port : ${PORT}`);
