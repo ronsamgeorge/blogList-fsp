@@ -5,8 +5,9 @@ const express = require('express');
 const cors = require('cors');
 const { default: mongoose } = require("mongoose");
 const app = express();
-const Blog = require('./models/blogs');
 const blogRouter = require('./controllers/blogs');
+const middleware = require('./utils/middleware');
+const { nextTick } = require("process");
 
 const mongoURL = config.mongo_url;
 
@@ -21,6 +22,8 @@ mongoose.connect(mongoURL)
 
 
 app.use('/api/blogs', blogRouter);
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 
 const PORT = config.port || 8080;
