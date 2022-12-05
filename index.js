@@ -1,4 +1,4 @@
-require("dotenv").config();
+const config = require("./utils/config");
 const http = require('http');
 const express = require('express');
 const cors = require('cors');
@@ -25,7 +25,7 @@ blogSchema.set('toJSON', {
 
 const Blog = mongoose.model('Blog',blogSchema);
 
-const mongoURL = process.env.MONGODB_URI;
+const mongoURL = config.mongo_url;
 mongoose.connect(mongoURL)
 .then(() => {
     console.log('connected to Database');
@@ -50,7 +50,7 @@ app.post('/api/blogs', (req,res) => {
     .catch(err => console.log(err));
 })
 
-const PORT = process.env.PORT || 8080;
+const PORT = config.port || 8080;
 app.listen(PORT, () => {
     console.log(`Listening on port : ${PORT}`);
 })
