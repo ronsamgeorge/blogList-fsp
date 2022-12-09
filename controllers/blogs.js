@@ -38,14 +38,17 @@ blogRouter.post('/', async (req,res) => {
     // .catch(err => logger.error(err));
 })
 
-blogRouter.get('/:id', (req,res) => {
+blogRouter.get('/:id', async (req,res) => {
     const id = req.params.id;
 
-    Blog.findById(id)
-    .then(result => {
-        res.json(result);
-    })
-    .catch(err => logger.error(err));
+    // Blog.findById(id)
+    // .then(result => {
+    //     res.json(result);
+    // })
+    // .catch(err => logger.error(err));
+
+    const result = await Blog.findById(id);
+    res.json(result);
 })
 
 module.exports = blogRouter;
