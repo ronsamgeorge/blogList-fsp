@@ -67,6 +67,19 @@ test('blog with url/title missing is not added to DB', async () => {
     .expect(400);
 })
 
+test('blog with no likes defaults it to zero', async () => {
+    const newBlog = {
+        "title" : "TEST after refactor 1",
+        "author" : "ABC",
+        "url" : "www.abc.com/firstBlog"
+    }
+
+    const response  = await api
+        .post('/api/blogs')
+        .send(newBlog);
+
+    expect(response.body.likes).toBe(0);
+})
 
 
 afterAll(() => {

@@ -19,17 +19,23 @@ blogRouter.post('/', async (req,res) => {
     if (!req.body.url || !req.body.title){
         return res.status(400).send({error: "Bad request"});
     }
+
+    if (!req.body.likes){
+        req.body.likes = 0;
+    }
+
     const blog = new Blog(req.body);
+
+    // Refactor code to await/ async format
+    const result = await blog.save();
+    res.status(201).json(result);
+
 
     // blog.save()
     // .then(result => {
     //     res.status(201).json(result);
     // })
     // .catch(err => logger.error(err));
-
-    // Refactor code to await/ async format
-    const result = await blog.save();
-    res.status(201).json(result);
 })
 
 blogRouter.get('/:id', (req,res) => {
