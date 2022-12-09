@@ -54,6 +54,21 @@ test('blog info is added to DB', async () => {
     expect(blogs.body).toHaveLength(3);
 })
 
+test('blog with url/title missing is not added to DB', async () => {
+    const newBlog =  {
+        "title" : "add test blog",
+        "author" : "test",
+        "likes" : 456
+    };
+
+   await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400);
+})
+
+
+
 afterAll(() => {
     mongoose.connection.close();
 })

@@ -14,6 +14,11 @@ blogRouter.get('/', async (req,res) => {
 })
 
 blogRouter.post('/', async (req,res) => {
+
+    // check if required url and title paramaters are present 
+    if (!req.body.url || !req.body.title){
+        return res.status(400).send({error: "Bad request"});
+    }
     const blog = new Blog(req.body);
 
     // blog.save()
