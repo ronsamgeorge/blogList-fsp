@@ -1,8 +1,8 @@
-POST http://localhost:8080/api/blogs
+PUT http://localhost:8080/api/blogs/6393208b0df2de141d751ba9
 Content-Type: application/json
 
 {
-    "title" : "Needs to be updated",
+    "title" : "updated",
     "author" : "ABC",
     "url" : "www.abc.com/firstBlog",
     "likes" : 123

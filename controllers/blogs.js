@@ -51,4 +51,25 @@ blogRouter.get('/:id', async (req,res) => {
     res.json(result);
 })
 
+blogRouter.delete('/:id', async (req,res) => {
+    const id = req.params.id;
+    await Blog.findByIdAndRemove(id);
+    res.status(204).send({message: "Resource Deleted"});
+})
+
+blogRouter.put('/:id', async(req,res) => {
+    const content = req.body;
+    const id = req.params.id;
+
+    const newBlog = {
+        title: content.title,
+        url : content.url,
+        author : content.author,
+        likes : content.likes
+    }
+
+    const result = await Blog.findByIdAndUpdate(id, newBlog, {new : true})
+    res.status(204).json(result);
+})
+
 module.exports = blogRouter;
