@@ -31,6 +31,12 @@ test('receive all blogs in DB', async () => {
     expect(blogs.body).toHaveLength(2);
 })
 
+test('id parameter is a string', async () =>{
+    const blogs = await api.get('/api/blogs');
+
+    expect(blogs.body[0].id).toBeDefined();
+})
+
 afterAll(() => {
     mongoose.connection.close();
 })
