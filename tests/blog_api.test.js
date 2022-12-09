@@ -37,6 +37,23 @@ test('id parameter is a string', async () =>{
     expect(blogs.body[0].id).toBeDefined();
 })
 
+test('blog info is added to DB', async () => {
+    const newBlog =  {
+        "title" : "add test blog",
+        "author" : "test",
+        "url" : "www.XYZ.com/testAddBlog",
+        "likes" : 456
+    };
+
+   await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201);
+
+    const blogs = await api.get('/api/blogs');
+    expect(blogs.body).toHaveLength(3);
+})
+
 afterAll(() => {
     mongoose.connection.close();
 })

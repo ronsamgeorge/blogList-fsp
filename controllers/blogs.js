@@ -13,14 +13,18 @@ blogRouter.get('/', async (req,res) => {
     res.json(result);
 })
 
-blogRouter.post('/', (req,res) => {
+blogRouter.post('/', async (req,res) => {
     const blog = new Blog(req.body);
 
-    blog.save()
-    .then(result => {
-        res.status(201).json(result);
-    })
-    .catch(err => logger.error(err));
+    // blog.save()
+    // .then(result => {
+    //     res.status(201).json(result);
+    // })
+    // .catch(err => logger.error(err));
+
+    // Refactor code to await/ async format
+    const result = await blog.save();
+    res.status(201).json(result);
 })
 
 blogRouter.get('/:id', (req,res) => {
