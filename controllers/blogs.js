@@ -1,5 +1,6 @@
 const blogRouter = require('express').Router();
 const Blog = require('../models/blogs');
+const User = require('../models/users');
 
 blogRouter.get('/', async (req,res) => {
     const result = await Blog.find({});
@@ -17,29 +18,25 @@ blogRouter.post('/', async (req,res) => {
         req.body.likes = 0;
     }
 
-    const blog = new Blog(req.body);
+    const {url, title, author, userId, likes} = req.body;
+    const user = await User.findById(userId);
+    const blog = new Blog({
+        title,
+        author,
+        user : user._id,
+        likes,
+        url
+    });
 
     // Refactor code to await/ async format
     const result = await blog.save();
+    user.blog =  user.blog.concat(result._id);
+    await user.save();
     res.status(201).json(result);
-
-
-    // blog.save()
-    // .then(result => {
-    //     res.status(201).json(result);
-    // })
-    // .catch(err => logger.error(err));
 })
 
 blogRouter.get('/:id', async (req,res) => {
     const id = req.params.id;
-
-    // Blog.findById(id)
-    // .then(result => {
-    //     res.json(result);
-    // })
-    // .catch(err => logger.error(err));
-
     const result = await Blog.findById(id);
     res.json(result);
 })

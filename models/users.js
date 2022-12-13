@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
-
 const userSchema = mongoose.Schema({
     username : String,
-    password : String,
     name : String,
-    notes : [
+    passwordHash : String,
+    blog : [
         {
-            type : mongoose.Schema.type.ObjectId,
+            type : mongoose.Schema.Types.ObjectId,
             ref : 'Blog'
         }
     ]
@@ -18,7 +17,7 @@ userSchema.set('toJSON', {
         returnedObj.id  = document._id.toString();
         delete returnedObj._id;
         delete returnedObj.__v;
-        delete returnedObj.password;
+        delete returnedObj.passwordHash;
     }
 })
 
